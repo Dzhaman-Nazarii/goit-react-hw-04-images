@@ -1,45 +1,52 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import Searchbar from './Searchbar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 
-export default class App extends Component {
-  state = {
-    galleryName: '',
-    page: 1,
-    totalHits: 0,
-    gallery: []
+export default function App() {
+
+  // state = {
+  //   galleryName: '',
+  //   page: 1,
+  //   totalHits: 0,
+  //   gallery: []
+  // };
+
+  const [galleryName, setGalleryName] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalHits, setTotalHits] = useState(0);
+  const [gallery, setGallery] = useState([]);
+
+  const handleFormSubmit = galleryName => {
+    // this.setState({ galleryName, page: 1, totalHits: 0 });
+    setGalleryName(galleryName)
+    setPage(1)
+    setTotalHits(0)
   };
 
-  handleFormSubmit = galleryName => {
-    this.setState({ galleryName, page: 1, totalHits: 0 });
+  const handleButtonMore = () => {
+    setPage(prevPage => prevPage.page + 1)
+    // this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
-  handleButtonMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
+  const handleGalleryData = (hits, totalHits) => {
+    setGallery(prevGallery => [...prevGallery, ...hits])
+    setTotalHits(totalHits)
+    // this.setState(prevState => ({
+    //   gallery: [...prevState.gallery, ...hits],
+    //   totalHits
+    // }));
   };
-
-  handleGalleryData = (hits, totalHits) => {
-    this.setState(prevState => ({
-      gallery: [...prevState.gallery, ...hits],
-      totalHits
-    }));
-  };
-
-  render() {
-    const { galleryName, page, totalHits, gallery } = this.state;
-    const hasMore = gallery.length < totalHits && gallery.length > 0;
 
     return (
       <div>
-        <Searchbar onSubmit={this.handleFormSubmit} />
+        <Searchbar onSubmit={handleFormSubmit} />
         <ImageGallery
           galleryName={galleryName}
           page={page}
-          onGalleryData={this.handleGalleryData}
+          onGalleryData={handleGalleryData}
         />
-        {hasMore && <Button handleButtonMore={this.handleButtonMore} />}
+        { gallery.length < totalHits && gallery.length > 0 && <Button handleButtonMore={handleButtonMore} />}
       </div>
     );
-  }
 }
