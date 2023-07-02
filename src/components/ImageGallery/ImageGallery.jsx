@@ -6,15 +6,19 @@ import css from './ImageGallery.module.css';
 
 export default function ImageGallery({ galleryName, page, onGalleryData }) {
   const [gallery, setGallery] = useState([]);
+  const [prevGalleryName, setPrevGalleryName] = useState('');
   const [status, setStatus] = useState('idle');
 
   useEffect(() => {
     if (galleryName === '') {
-      return
+      return;
     }
 
     const fetchData = async () => {
       try {
+        if (galleryName !== prevGalleryName) {
+          setGallery([]);
+        }
         setStatus('pending');
 
         const response = await fetch(
@@ -35,7 +39,8 @@ export default function ImageGallery({ galleryName, page, onGalleryData }) {
     if (galleryName && (galleryName !== '' || page !== 1)) {
       fetchData();
     }
-  }, [galleryName, page, onGalleryData]);
+    setPrevGalleryName(galleryName);
+  }, [galleryName, page,]);
 
   if (status === 'idle') {
     return null;

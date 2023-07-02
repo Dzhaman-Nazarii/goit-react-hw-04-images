@@ -17,7 +17,7 @@ export default function App() {
   };
 
   const handleButtonMore = () => {
-    setPage(prevPage => prevPage.page + 1)
+    setPage(prevPage => prevPage + 1)
   };
 
   const handleGalleryData = (hits, totalHits) => {

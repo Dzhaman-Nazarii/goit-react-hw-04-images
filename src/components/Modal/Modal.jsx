@@ -4,8 +4,6 @@ import css from './Modal.module.css';
 import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
-console.log(modalRoot);
-
 export default function Modal({ largeImageURL, tags, closeModal }) {
 
     useEffect(() => {
