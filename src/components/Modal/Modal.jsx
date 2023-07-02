@@ -4,18 +4,23 @@ import css from './Modal.module.css';
 import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
+console.log(modalRoot);
 
 export default function Modal({ largeImageURL, tags, closeModal }) {
 
-    const handleKeyDown = (event) => {
-        if (event.code === 'Escape') {
-            closeModal();
-        }
-    };
-
     useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.code === 'Escape') {
+                closeModal();
+            }
+        };
+
         document.addEventListener('keydown', handleKeyDown);
-    }, [])
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [closeModal]);
 
     const handleBackdropClick = (event) => {
         if (event.target !== event.currentTarget) {
@@ -23,20 +28,14 @@ export default function Modal({ largeImageURL, tags, closeModal }) {
         }
     };
 
-    useEffect(() => {
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        }
-    }, [])
-
-        return createPortal(
-            <div className={css.Overlay} onClick={handleBackdropClick}>
-                <div className={css.Modal}>
-                    <img src={largeImageURL} alt={tags} />
-                </div>
-            </div>,
-            modalRoot
-        );
+    return createPortal(
+        <div className={css.Overlay} onClick={handleBackdropClick}>
+            <div className={css.Modal}>
+                <img src={largeImageURL} alt={tags} />
+            </div>
+        </div>,
+        modalRoot
+    );
 }
 
 Modal.propTypes = {
