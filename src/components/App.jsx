@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { animateScroll } from 'react-scroll';
 import Searchbar from './Searchbar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
@@ -45,6 +46,15 @@ export default function App() {
 
   const handleButtonMore = () => {
     setPage(prevPage => prevPage + 1);
+    scrollToBottomButton();
+  };
+
+    const scrollToBottomButton = () => {
+    animateScroll.scrollToBottom({
+      duration: 2000,
+      delay: 10,
+      smooth: 'linear',
+    });
   };
 
   return (
