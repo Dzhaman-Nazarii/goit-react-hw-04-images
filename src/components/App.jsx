@@ -24,7 +24,7 @@ export default function App() {
           `https://pixabay.com/api/?q=${galleryName}&page=${page}&key=37532394-4be77775868909c78ad8f61fa&image_type=photo&orientation=horizontal&per_page=12`
         );
         const galleryData = await response.json();
-        const { hits, totalHits } = galleryData;
+        const { hits } = galleryData;
 
         setGallery([...gallery, ...hits]);
         setStatus('resolved');
@@ -57,9 +57,8 @@ export default function App() {
         <ImageGallery
           galleryName={galleryName}
           page={page}
-          onGalleryData
-            status = { status }
-            gallery={ gallery }
+          status = { status }
+          gallery={ gallery }
         />
         { gallery.length < totalHits && gallery.length > 0 && <Button handleButtonMore={handleButtonMore} />}
       </div>
