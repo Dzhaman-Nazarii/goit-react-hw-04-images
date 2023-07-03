@@ -1,7 +1,7 @@
 import { useState } from "react";
-import PropTypes from 'prop-types';
 import Modal from "components/Modal/Modal";
 import css from './ImageGalleryItems.module.css'
+import PropTypes from 'prop-types';
 
 export default function ImageGalleryItem({ id, src, alt, largeImageURL }) {
 
